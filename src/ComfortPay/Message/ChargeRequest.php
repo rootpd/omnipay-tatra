@@ -16,6 +16,16 @@ class ChargeRequest extends AbstractSoapRequest
         return $this->setParameter('transactionType', $value);
     }
 
+    public function getWs()
+    {
+        return $this->getParameter('ws');
+    }
+
+    public function setWs($value)
+    {
+        return $this->setParameter('ws', $value);
+    }
+
     public function getTerminalId()
     {
         return $this->getParameter('terminalId');
@@ -98,7 +108,7 @@ class ChargeRequest extends AbstractSoapRequest
 
     public function getData()
     {
-        $this->validate('terminalId', 'amount', 'transactionId', 'transactionType', 'referedCardId', 'mid', 'currency');
+        $this->validate('terminalId', 'ws', 'amount', 'transactionId', 'transactionType', 'referedCardId',  'currency');
 
         if (in_array($this->getTransactionType(), [Gateway::TRANSACTION_TYPE_PREAUTH_CONFIRM, Gateway::TRANSACTION_TYPE_PREAUTH_CANCEL, Gateway::TRANSACTION_TYPE_CHARGEBACK])) {
             $this->validate('parentTransactionId');
@@ -110,7 +120,7 @@ class ChargeRequest extends AbstractSoapRequest
             'transactionId' => $this->getTransactionId(),
             'parentTransactionId' => $this->getParentTransactionId(),
             'referedCardId' => $this->getReferedCardId(),
-            'merchantId' => $this->getMid(),
+            'merchantId' => $this->getWs(),
             'terminalId' => $this->getTerminalId(),
             'amount' => $this->getAmount(),
             'cc' => $this->getCurrency(),
